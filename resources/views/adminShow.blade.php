@@ -83,8 +83,6 @@
 
         <h1> YOU NO ADMIN!!! </h1>
 
-
-
     <div style="float: right;">
         <ul class="nav navbar-nav navbar-right">
             <!-- Authentication Links -->
