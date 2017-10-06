@@ -1,0 +1,94 @@
+body {
+
+    background-color: #c9e2b3;
+    background: url('../foto/2.png');
+    background-repeat: repeat-y;
+    background-size: 100%;
+}
+
+.navbar-nav-scroll {
+
+    /*background: green;*/
+    height: 40px;
+}
+
+.navbar-nav li a {
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.navbar-nav li a:hover {
+    color: blue;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul:after {
+    display: block;
+    content: ' ';
+    clear: both;
+    float: none;
+}
+ul.navbar-nav > li {
+    float: left;
+    padding-right: 5px;
+    position: relative;
+}
+ul.navbar-nav > li > a {
+    display: block;
+    padding: 10px;
+    color: white;
+    background-color: #3f51b5;
+    text-decoration: none;
+}
+ul.navbar-nav > li > a:hover {
+    background-color: #3fb4b5;
+}
+ul.submenu {
+    display: none;
+    position: absolute;
+    width: 140px;
+    top: 48px;
+    left: 0;
+    background-color: forestgreen;
+    border: 1px solid yellow;
+}
+ul.submenu > li {
+    display: block;
+}
+ul.submenu > li > a {
+    display: block;
+    padding: 10px;
+    color: white;
+    background-color: #3f51b5;
+    text-decoration: none;
+}
+ul.submenu > li > a:hover {
+    color: orange;
+    text-decoration: none;
+}
+ul.navbar-nav > li:hover > ul.submenu {
+     display: block;
+ }
+
+.cat {
+   background-color: wheat;
+    width: 800px;
+    height: 840px;
+    text-align: justify;
+    font-size: 18px;
+    /*margin: 3px 3px 3px 3px;*/
+    color: darkblue;
+    margin-left: 500px;
+}
+.cat_title {
+    color: green;
+    text-align: center;
+}
