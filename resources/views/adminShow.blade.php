@@ -41,9 +41,11 @@
                         <a class="nav-link" href="{{ route('AddArticle') }}" target="_blank" >Add Article</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('AddCat') }}" target="_blank" >Add category</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('Articles') }}" target="_blank" >Go to site</a>
                     </li>
-
                 </ul>
             </div>
             <h2 class = "cat_title">ALL NEWS</h2>

@@ -61,7 +61,17 @@ class MyController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get();
 
-        return view('page')->with('articles', $articles);
+        if (isset($articles[0]->id)) {  //??
+
+            return view('page')->with('articles', $articles);
+
+        } else {
+
+            $noArticles = 'Sorry, there are no articles in this category';
+
+            return view('page')->with('noArt', $noArticles);
+
+        }
 
     }
 

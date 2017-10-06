@@ -59,6 +59,13 @@ class AdminController extends Controller
 
     public function SaveArt(Request $request) {
 
+            $this->validate($request,
+                         [ 'title' => 'required|min:3',
+                            'description' => 'required|min:3',
+                            'image' => 'required|min:3',
+                            'text' => 'required|min:3',
+                         ]);
+
         unset($request['_token']);
 
         $data = $request->all();
@@ -137,19 +144,24 @@ class AdminController extends Controller
 
             Article::where('id', $data['id'])->update($data);
 
-        } else {           //add article
+        } else {            //add article
 
-            $tags_id = '';
+                if (isset($data['tags_id'])) {
 
-            foreach ($data['tags_id'] as $tagsid) {
+                    $tags_id = '';
 
-                $tags_id .= $tagsid . ';';
+                        foreach ($data['tags_id'] as $tagsid) {
 
-            }
+                            $tags_id .= $tagsid . ';';
 
-            if($tags_custom_id) $tags_id .= $tags_custom_id;
+                        }
 
-            $data['tags_id'] = $tags_id;
+                    if ($tags_custom_id) $tags_id .= $tags_custom_id;
+
+                    $data['tags_id'] = $tags_id;
+
+                }
+
             $article = new Article;
             $article->fill($data);
             $article->save();
@@ -176,6 +188,24 @@ class AdminController extends Controller
         Article::find($id)->delete();
 
         return redirect('/admin');
+
+    }
+
+    public function AddCat() {
+
+        return view('add-cat');
+
+    }
+
+    public function saveCat(Request $request) {
+
+        dump($request->all());
+
+        $data = $request->all();
+
+        $category = new category;
+        $category->fill($data);
+        $category->save();
 
     }
 

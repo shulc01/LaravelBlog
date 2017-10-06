@@ -19,7 +19,7 @@ Route::get('admin', 'AdminController@showAdmin')->name('Admin');
 
 Route::get('admin/edit/', 'AdminController@editArt')->name('EditArticle');
 
-Route::get('admin/add/', 'AdminController@AddArt')->name('AddArticle');
+Route::get('admin/addArticle/', 'AdminController@AddArt')->name('AddArticle');
 
 Route::post('admin/edit/', 'AdminController@SaveArt')->name('saveArticle');
 
@@ -30,6 +30,10 @@ Route::get('category', 'MyController@ShowCat')->name('Allcategories');
 Route::get('category/{id}', 'MyController@SingleCat')->name('SingleCat');
 
 Route::get('tags/{id}', 'MyController@showTagArt')->name('showTags');
+
+Route::get('admin/addCat/', 'AdminController@AddCat')->name('AddCat');
+
+Route::post('admin/addCat/', 'AdminController@saveCat')->name('saveCat');
 
 
 Auth::routes();
