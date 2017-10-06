@@ -50,7 +50,6 @@
 
                 </ul>
             </div>
-
             <h2 class = "cat_title">ALL NEWS</h2>
 
             <form action = "{{ route('EditArticle')  }}" method = "">
