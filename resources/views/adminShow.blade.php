@@ -35,10 +35,6 @@
             </ul>
         </div>
 
-
-
-
-
             <div class="navbar-nav-scroll">
                 <ul class="navbar-nav">
                     <li class="nav-item">
@@ -52,11 +48,25 @@
             </div>
             <h2 class = "cat_title">ALL NEWS</h2>
 
+        <script>
+
+            function confirmDelete(id){
+
+                var x = confirm ("Are you sure want to delete?");
+
+                if (x) return window.location.href='/admin/delete/' + id;
+
+                else false;
+
+            }
+
+        </script>
+
             <form action = "{{ route('EditArticle')  }}" method = "">
 
                 @foreach($allarticles as $article)
 
-                    <input type="button" value="Delete" onclick="window.location.href='{{ route('DeleteArticle', $article->id) }}'"/>
+                    <input type="button" value="Delete" onclick = " return confirmDelete({{ $article->id}})"/>
 
                     <input type = "checkbox" name = "article" value = "{{  $article->id  }}"/>
 
