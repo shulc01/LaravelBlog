@@ -5,23 +5,27 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\category;
 use App\Tag;
+use Illuminate\Support\Facades\View;
+use function print_r;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class MyController extends Controller
 {
+
+    public function __construct(){
+
+        $allCat = Category::all();
+
+        View::share('categories', $allCat);
+
+    }
+
     public function articles() {
 
-    $header = 'Header';
-    $footer = 'Footer';
+        $articles = Article::all()->sortByDesc('created_at');
 
-    $articles = Article::all()->sortByDesc('created_at');
+        return view('page')->with('articles', $articles);
 
-   return view('page')->with(['header' => $header,
-                                    'footer' => $footer,
-                                    'articles' => $articles
-                                    ]);
     }
 
     public function article($id) {
@@ -46,9 +50,7 @@ class MyController extends Controller
 
     public function ShowCat() {
 
-        $categories = Category::all();
-
-        return view('show-cat')->with('categories', $categories);
+        return view('show-cat');
 
     }
 
@@ -61,7 +63,7 @@ class MyController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get();
 
-        if (isset($articles[0]->id)) {  //??
+        if (collect($articles)->isNotEmpty()) {
 
             return view('page')->with('articles', $articles);
 
@@ -72,6 +74,16 @@ class MyController extends Controller
             return view('page')->with('noArt', $noArticles);
 
         }
+
+    }
+
+    public function DelCat($id) {
+
+        category::where('id_cat', $id)->delete();
+
+        $articles = Article::where('category_id', $id)->delete();
+
+        return redirect('/articles');
 
     }
 

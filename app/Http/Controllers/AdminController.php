@@ -85,7 +85,9 @@ class AdminController extends Controller
             $result1 = Tag::where(function($query) use ($custom_tags) {
 
                 foreach($custom_tags as $tagss){
+
                     $query->orWhere('tag_name', 'LIKE', $tagss);
+
                 }
 
             })->get();
@@ -107,6 +109,7 @@ class AdminController extends Controller
                     }
 
                 }
+
             }
 
             if ($custom_tags) {  // if isset new tags
@@ -199,13 +202,18 @@ class AdminController extends Controller
 
     public function saveCat(Request $request) {
 
-        dump($request->all());
+        $this->validate($request,
+            ['category_name' => 'required|min:3',
+                'category_desc' => 'required|min:3'
+            ]);
 
         $data = $request->all();
 
         $category = new category;
         $category->fill($data);
         $category->save();
+
+        return redirect('/admin');
 
     }
 

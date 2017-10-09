@@ -35,6 +35,14 @@ Route::get('admin/addCat/', 'AdminController@AddCat')->name('AddCat');
 
 Route::post('admin/addCat/', 'AdminController@saveCat')->name('saveCat');
 
+Route::get('category/delete/{id}', 'MyController@DelCat');
+
+
+
+//Route::filter('navCat', 'MyController@allcat');
+//
+//Route::when('/*', 'navCat');
+
 
 Auth::routes();
 

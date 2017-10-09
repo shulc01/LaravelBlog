@@ -40,11 +40,15 @@
                 </li>
                 <li><a href = "{{ route('Allcategories') }}" target="_blank">All categories</a>
                     <ul class = "submenu">
-                        <li><a href = "{{ route('SingleCat', 1) }}">Football</a></li>
-                        <li><a href = "{{ route('SingleCat', 2) }}">Biathlon</a></li>
-                        <li><a href = "{{ route('SingleCat', 3) }}">Tennis</a></li>
-                        <li><a href = "{{ route('SingleCat', 4) }}">Hockey</a></li>
-                        <li><a href = "{{ route('SingleCat', 5) }}">Basketball</a></li>
+
+                        @foreach ($categories as $category)
+
+                            {{--{{ print_r($categoty) }}--}}
+
+                         <li><a href = "{{ route('SingleCat', $category->id_cat) }}">{{ $category->category_name }}</a></li>
+
+                        @endforeach
+
                     </ul>
                 </li>
                 <li>
