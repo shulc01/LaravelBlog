@@ -213,7 +213,7 @@ class AdminController extends Controller
                 'category_desc' => 'required|min:3'
             ]);
 
-        $data = $request->all(); //sdfsdfsdf
+        $data = $request->all(); //sdfsdfsdfd
 
         $category = new category;
         $category->fill($data);
