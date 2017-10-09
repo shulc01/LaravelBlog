@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\category;
 use App\Tag;
-//use App\DB;
 
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function showAdmin() {
+    public function showAdmin()
+    {
 
         $allArticles = Article::leftJoin('categories', 'articles.category_id', '=' , 'categories.id_cat')
                                 ->select('articles.id', 'articles.title', 'categories.category_name', 'categories.id_cat', 'articles.description')->get();
@@ -20,7 +20,8 @@ class AdminController extends Controller
 
     }
 
-    public function editArt(Request $request) {
+    public function editArt(Request $request)
+    {
 
         if($request['article']) {
 
@@ -57,7 +58,8 @@ class AdminController extends Controller
 
     }
 
-    public function SaveArt(Request $request) {
+    public function SaveArt(Request $request)
+    {
 
             $this->validate($request,
                          [ 'title' => 'required|min:3',
@@ -175,7 +177,8 @@ class AdminController extends Controller
 
     }
 
-    public function AddArt() {
+    public function AddArt()
+    {
 
         $all_categories = category::all();
 
@@ -186,7 +189,8 @@ class AdminController extends Controller
                                                 ]);
     }
 
-    public function DelArt($id) {
+    public function DelArt($id)
+    {
 
         Article::find($id)->delete();
 
@@ -194,13 +198,15 @@ class AdminController extends Controller
 
     }
 
-    public function AddCat() {
+    public function AddCat()
+    {
 
         return view('add-cat');
 
     }
 
-    public function saveCat(Request $request) {
+    public function saveCat(Request $request)
+    {
 
         $this->validate($request,
             ['category_name' => 'required|min:3',
