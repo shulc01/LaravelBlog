@@ -215,7 +215,7 @@ class AdminController extends Controller
 
         $data = $request->all(); //sdfsdfsdfd
 
-        $category = new category;
+        $category = new category; 
         $category->fill($data);
         $category->save();
 
