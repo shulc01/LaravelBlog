@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\View;
 class MyController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
 
         $allCat = Category::all();
 
@@ -19,7 +20,8 @@ class MyController extends Controller
 
     }
 
-    public function articles() {
+    public function articles()
+    {
 
         $articles = Article::all()->sortByDesc('created_at');
 
@@ -27,7 +29,8 @@ class MyController extends Controller
 
     }
 
-    public function article($id) {
+    public function article($id)
+    {
 
         $article = Article::find($id);
 
@@ -47,13 +50,15 @@ class MyController extends Controller
 
     }
 
-    public function ShowCat() {
+    public function ShowCat()
+    {
 
         return view('show-cat');
 
     }
 
-    public function SingleCat($id) {
+    public function SingleCat($id)
+    {
 
         $articles = Article::
                     leftJoin('categories', 'articles.category_id', '=' , 'categories.id_cat')
@@ -73,10 +78,10 @@ class MyController extends Controller
             return view('page')->with('noArt', $noArticles);
 
         }
-
     }
 
-    public function DelCat($id) {
+    public function DelCat($id)
+    {
 
         category::where('id_cat', $id)->delete();
 
@@ -86,7 +91,8 @@ class MyController extends Controller
 
     }
 
-    public function showTagArt($id) {
+    public function showTagArt($id)
+    {
 
         $likeSearch1 = $id . ';%';
 
