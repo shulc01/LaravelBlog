@@ -64,7 +64,7 @@
 
         </script>
 
-            <form action = "{{ route('EditArticle')  }}" method = "">
+            {{--<form action = "{{ route('EditArticle')  }}" method = "GET">--}}
 
                 @foreach($allarticles as $article)
 
@@ -72,14 +72,14 @@
 
                     <input type = "checkbox" name = "article" value = "{{  $article->id  }}"/>
 
-                    <a href = "{{ route('ShowArticle', $article->id) }}" target = "_blank">{{ $article->title }}</a>
+                    <a href = "{{ route('EditArticle', $article->id) }}" target = "_blank">{{ $article->title }}</a>
                     <a href = "{{ route('ShowCategory', $article->id_cat) }}" target = "_blank">({{ $article->category_name  }})</a><br /><br />
 
                 @endforeach
 
-                <input type="submit" value = "Edit"/>
+                {{--<input type="submit" value = "Edit"/>--}}
 
-            </form>
+            {{--</form>--}}
 
     @else
 

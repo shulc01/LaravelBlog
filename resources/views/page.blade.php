@@ -2,8 +2,6 @@
 
 @section('content2')
 
-    {{--{{ dd($tag_name) }}--}}
-
     @if(!empty($articles))
 
         <h1 class = "cat_title"> {{  strtoupper($articles[0]['category_name']) . ' NEWS' }}</h1>
@@ -18,7 +16,6 @@
 
             <a href = {{ route('ShowArticle', $article->id) }}><h2 align = "center">{{ $article->title  }}</h2></a>
             <h4 align = "center"> {{ $article->description }} </h4>
-            {{--<img src = {{ $article->image  }} />--}}
             <h5 align = "right">{{ $article->updated_at }}</h5>
 
             <hr/>
@@ -27,7 +24,7 @@
 
     @else
 
-        <h2>{{ $noArt }}</h2>
+        <h2>{{ 'Sorry, there are no articles in this category:-(' }}</h2>
 
     @endif
 

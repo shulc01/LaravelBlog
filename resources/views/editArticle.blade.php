@@ -8,9 +8,6 @@
 
 @endif
 
-{{--{{ dump($editArticle) }}--}}
-{{--{{ dd($editArticle) }}--}}
-
 <form action = "{{route('SaveArticle')}}" method = "POST">
 
     <b>Title</b><br/>

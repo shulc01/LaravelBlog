@@ -20,45 +20,37 @@ class AdminController extends Controller
 
     }
 
-    public function editArticle(Request $request)
+    public function editArticle($id)
     {
 
-        $articleId = $request->get('article');
+        $editArticle = Article::find($id);
 
+        $all_categories = Category::all();
 
-        if($articleId) {
+        $tags = Tag::all();
 
-            $editArticle = Article::find($articleId);
+        if (isset($editArticle->tags_id)) {
 
-            $all_categories = Category::all();
+            $tags_id = explode(';', $editArticle->tags_id);
 
-            $tags = Tag::all();
+            $editArticle->tags_id = $tags_id;
 
-            if (isset($editArticle->tags_id)) {
+            $tags_name = Tag::whereIn('id_tag', $tags_id)->get();
 
-                $tags_id = explode(';', $editArticle->tags_id);
+            $editArticle->tags_name = '';
 
-                $editArticle->tags_id = $tags_id;
+            foreach ($tags_name as $value) {
 
-                $tags_name = Tag::whereIn('id_tag', $tags_id)->get();
-
-                $editArticle->tags_name = '';
-
-                foreach ($tags_name as $value) {
-
-                    $editArticle->tags_name .= $value->tag_name . '; ';
-
-                }
+                $editArticle->tags_name .= $value->tag_name . '; ';
 
             }
 
+        }
+
             return view('editArticle')->with(['editArticle' => $editArticle,
-                                                    'allcat' => $all_categories,
-                                                    'tags' => $tags
-                                                    ]);
-
-        } else return redirect('/admin');
-
+                'allcat' => $all_categories,
+                'tags' => $tags
+            ]);
     }
 
     public function saveArticle(Request $request)

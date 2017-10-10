@@ -2,14 +2,10 @@
 
 //namespace App;
 namespace App\Http\Controllers;
-//namespace App\Models;
 
-//namespace App\Models;
-//use App\Http\Controller\Controller;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
-use App\Models\User;
 
 use Illuminate\Support\Facades\View;
 
@@ -19,9 +15,9 @@ class FrontController extends Controller
     public function __construct()
     {
 
-        $allCat = Category::all();
+        $allCategories = Category::all();
 
-        View::share('categories', $allCat);
+        View::share('categories', $allCategories);
 
     }
 
@@ -75,12 +71,6 @@ class FrontController extends Controller
         if (collect($articles)->isNotEmpty()) {
 
             return view('page')->with('articles', $articles);
-
-        } else {
-
-            $noArticles = 'Sorry, there are no articles in this category';
-
-            return view('page')->with('noArt', $noArticles);
 
         }
     }

@@ -16,7 +16,7 @@ Route::group(['prefix' => 'admin'], function()
 
     Route::get('/', 'AdminController@showAdmin')->name('Admin');
 
-    Route::get('edit/', 'AdminController@editArticle')->name('EditArticle');
+    Route::get('edit/article/{id}', 'AdminController@editArticle')->name('EditArticle');
 
     Route::get('new-article', 'AdminController@createArticle')->name('CreateArticle');
 
