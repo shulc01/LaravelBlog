@@ -11,7 +11,7 @@
 {{--{{ dump($editArticle) }}--}}
 {{--{{ dd($editArticle) }}--}}
 
-<form action = "{{route('saveArticle')}}" method = "POST">
+<form action = "{{route('SaveArticle')}}" method = "POST">
 
     <b>Title</b><br/>
         <input class = "input-mini " size = "100" type="text" name="title" value="@if (isset($editArticle)) {{ $editArticle->title }} @endif" />

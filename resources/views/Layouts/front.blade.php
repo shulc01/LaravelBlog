@@ -32,27 +32,24 @@
             </ul>
         </div>
 
-
         <div class="navbar-nav-scroll">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('Admin') }}" target="_blank" >Admin</a>
                 </li>
-                <li><a href = "{{ route('Allcategories') }}" target="_blank">All categories</a>
+                <li><a href = "{{ route('ShowAllCategories') }}" target="_blank">All categories</a>
                     <ul class = "submenu">
 
                         @foreach ($categories as $category)
 
-                            {{--{{ print_r($categoty) }}--}}
-
-                         <li><a href = "{{ route('SingleCat', $category->id_cat) }}">{{ $category->category_name }}</a></li>
+                         <li><a href = "{{ route('ShowCategory', $category->id_cat) }}">{{ $category->category_name }}</a></li>
 
                         @endforeach
 
                     </ul>
                 </li>
                 <li>
-                    <a href = "{{ route('Articles') }}" target="_blank">All articles</a>
+                    <a href = "{{ route('ShowAllArticles') }}" target="_blank">All articles</a>
                 </li>
             </ul>
         </div>

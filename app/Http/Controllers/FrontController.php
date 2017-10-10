@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\View;
 use PhpParser\Node\Expr\Array_;
 
 
-class MyController extends Controller
+class FrontController extends Controller
 {
 
     public function __construct()

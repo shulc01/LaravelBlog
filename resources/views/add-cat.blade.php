@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <form action = "{{route('saveCat')}}" method = "POST">
+    <form action = "{{route('SaveCategory')}}" method = "POST">
 
         <b>Title</b><br/>
         <input class = "input-mini " size = "100" type="text" name="category_name" value="@if (isset($editArticle)) {{ $editArticle->title }} @endif" />

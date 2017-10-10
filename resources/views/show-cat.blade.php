@@ -20,7 +20,7 @@
 
         @foreach ($categories as $category)
 
-            <a href = {{ route('SingleCat', $category->id_cat) }}><h2 align = "center">{{ $category->category_name  }}</h2></a>
+            <a href = {{ route('ShowCategory', $category->id_cat) }}><h2 align = "center">{{ $category->category_name  }}</h2></a>
 
                 @if (isset(Auth::user()->name) && Auth::user()->name == 'admin')
 

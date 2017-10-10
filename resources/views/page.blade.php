@@ -16,7 +16,7 @@
 
             @foreach ($articles as $article)
 
-            <a href = {{ route('showArticle', $article->id) }}><h2 align = "center">{{ $article->title  }}</h2></a>
+            <a href = {{ route('ShowArticle', $article->id) }}><h2 align = "center">{{ $article->title  }}</h2></a>
             <h4 align = "center"> {{ $article->description }} </h4>
             {{--<img src = {{ $article->image  }} />--}}
             <h5 align = "right">{{ $article->updated_at }}</h5>

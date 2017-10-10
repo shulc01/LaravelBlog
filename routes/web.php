@@ -11,37 +11,40 @@
 |
 */
 
-Route::get('articles/', 'MyController@articles')->name('Articles');
+Route::group(['prefix' => 'admin'], function()
+{
 
-Route::get('articles/{id}', 'MyController@article')->name('showArticle');
+    Route::get('/', 'AdminController@showAdmin')->name('Admin');
 
-Route::get('admin', 'AdminController@showAdmin')->name('Admin');
+    Route::get('edit/', 'AdminController@editArt')->name('EditArticle');
 
-Route::get('admin/edit/', 'AdminController@editArt')->name('EditArticle');
+    Route::get('new-article', 'AdminController@AddArt')->name('CreateArticle');
 
-Route::get('admin/addArticle/', 'AdminController@AddArt')->name('AddArticle');
+    Route::post('edit/', 'AdminController@SaveArt')->name('SaveArticle');
 
-Route::post('admin/edit/', 'AdminController@SaveArt')->name('saveArticle');
+    Route::get('delete/{id}', 'AdminController@DelArt')->name('DeleteArticle');
 
-Route::get('admin/delete/{id}', 'AdminController@DelArt')->name('DeleteArticle');
+    Route::get('new-category', 'AdminController@AddCat')->name('CreateCategory');
 
-Route::get('category', 'MyController@ShowCat')->name('Allcategories');
+    Route::post('addCat/', 'AdminController@saveCat')->name('SaveCategory');
 
-Route::get('category/{id}', 'MyController@SingleCat')->name('SingleCat');
-
-Route::get('tags/{id}', 'MyController@showTagArt')->name('showTags');
-
-Route::get('admin/addCat/', 'AdminController@AddCat')->name('AddCat');
-
-Route::post('admin/addCat/', 'AdminController@saveCat')->name('saveCat');
-
-Route::get('category/delete/{id}', 'MyController@DelCat');
+});
 
 
 
-//Route::filter('navCat', 'MyController@allcat');
-//
-//Route::when('/*', 'navCat');
+
+
+Route::get('articles/', 'FrontController@articles')->name('ShowAllArticles');
+
+Route::get('articles/{id}', 'FrontController@article')->name('ShowArticle');
+
+Route::get('category', 'FrontController@ShowCat')->name('ShowAllCategories');
+
+Route::get('category/{id}', 'FrontController@SingleCat')->name('ShowCategory');
+
+Route::get('tags/{id}', 'FrontController@showTagArt')->name('ShowArticleWithTags');
+
+Route::get('category/delete/{id}', 'FrontController@DelCat');
 
 
 Auth::routes();

@@ -38,13 +38,13 @@
             <div class="navbar-nav-scroll">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('AddArticle') }}" target="_blank" >Add Article</a>
+                        <a class="nav-link" href="{{ route('CreateArticle') }}" target="_blank" >Add Article</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('AddCat') }}" target="_blank" >Add category</a>
+                        <a class="nav-link" href="{{ route('CreateCategory') }}" target="_blank" >Add category</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('Articles') }}" target="_blank" >Go to site</a>
+                        <a class="nav-link" href="{{ route('ShowAllArticles') }}" target="_blank" >Go to site</a>
                     </li>
                 </ul>
             </div>
@@ -72,8 +72,8 @@
 
                     <input type = "checkbox" name = "article" value = "{{  $article->id  }}"/>
 
-                    <a href = "{{ route('showArticle', $article->id) }}" target = "_blank">{{ $article->title }}</a>
-                    <a href = "{{ route('SingleCat', $article->id_cat) }}" target = "_blank">({{ $article->category_name  }})</a><br /><br />
+                    <a href = "{{ route('ShowArticle', $article->id) }}" target = "_blank">{{ $article->title }}</a>
+                    <a href = "{{ route('ShowCategory', $article->id_cat) }}" target = "_blank">({{ $article->category_name  }})</a><br /><br />
 
                 @endforeach
 

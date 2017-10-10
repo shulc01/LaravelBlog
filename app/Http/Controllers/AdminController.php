@@ -22,10 +22,14 @@ class AdminController extends Controller
 
     public function editArt(Request $request)
     {
+        //$article =
 
-        if($request['article']) {
+        $articleId = $request->get('article');
 
-            $editArticle = Article::find($request['article']);
+
+        if($articleId) {
+
+            $editArticle = Article::find($articleId);
 
             $all_categories = category::all();
 
@@ -61,12 +65,12 @@ class AdminController extends Controller
     public function SaveArt(Request $request)
     {
 
-            $this->validate($request,
-                         [ 'title' => 'required|min:3',
-                            'description' => 'required|min:3',
-                            'image' => 'required|min:3',
-                            'text' => 'required|min:3',
-                         ]);
+        $this->validate($request,
+             [ 'title' => 'required|min:3',
+                'description' => 'required|min:3',
+                'image' => 'required|min:3',
+                'text' => 'required|min:3',
+             ]);
 
         unset($request['_token']);
 
@@ -184,9 +188,8 @@ class AdminController extends Controller
 
         $tags = Tag::all();
 
-        return view('editArticle')->with(['allcat' => $all_categories,
-                                                'tags' => $tags
-                                                ]);
+        return view('editArticle')
+            ->with(['allcat' => $all_categories, 'tags' => $tags]);
     }
 
     public function DelArt($id)
