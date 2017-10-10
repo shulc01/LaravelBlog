@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\category;
-use App\Tag;
+use App\Models\Article;
+use App\Models\Category;
+use App\Models\Tag;
 
 use Illuminate\Http\Request;
 
@@ -20,9 +20,8 @@ class AdminController extends Controller
 
     }
 
-    public function editArt(Request $request)
+    public function editArticle(Request $request)
     {
-        //$article =
 
         $articleId = $request->get('article');
 
@@ -31,7 +30,7 @@ class AdminController extends Controller
 
             $editArticle = Article::find($articleId);
 
-            $all_categories = category::all();
+            $all_categories = Category::all();
 
             $tags = Tag::all();
 
@@ -62,7 +61,7 @@ class AdminController extends Controller
 
     }
 
-    public function SaveArt(Request $request)
+    public function saveArticle(Request $request)
     {
 
         $this->validate($request,
@@ -181,10 +180,10 @@ class AdminController extends Controller
 
     }
 
-    public function AddArt()
+    public function createArticle()
     {
 
-        $all_categories = category::all();
+        $all_categories = Category::all();
 
         $tags = Tag::all();
 
@@ -192,7 +191,7 @@ class AdminController extends Controller
             ->with(['allcat' => $all_categories, 'tags' => $tags]);
     }
 
-    public function DelArt($id)
+    public function deleteArticle($id)
     {
 
         Article::find($id)->delete();
@@ -201,14 +200,14 @@ class AdminController extends Controller
 
     }
 
-    public function AddCat()
+    public function createCategory()
     {
 
         return view('add-cat');
 
     }
 
-    public function saveCat(Request $request)
+    public function saveCategory(Request $request)
     {
 
         $this->validate($request,

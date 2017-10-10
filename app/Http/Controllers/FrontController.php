@@ -1,13 +1,17 @@
 <?php
 
+//namespace App;
 namespace App\Http\Controllers;
+//namespace App\Models;
 
-use App\Article;
-use App\category;
-use App\Tag;
+//namespace App\Models;
+//use App\Http\Controller\Controller;
+use App\Models\Article;
+use App\Models\Category;
+use App\Models\Tag;
+use App\Models\User;
+
 use Illuminate\Support\Facades\View;
-use PhpParser\Node\Expr\Array_;
-
 
 class FrontController extends Controller
 {
@@ -21,7 +25,7 @@ class FrontController extends Controller
 
     }
 
-    public function articles()
+    public function showAllArticles()
     {
 
         $articles = Article::all()->sortByDesc('created_at');
@@ -30,12 +34,12 @@ class FrontController extends Controller
 
     }
 
-    public function article($id)
+    public function showArticle($id)
     {
 
         $article = Article::find($id);
 
-        $category_name = category::where('id_cat', $article->category_id)->first();
+        $category_name = Category::where('id_cat', $article->category_id)->first();
 
         $tagsid = explode(';' , $article->tags_id);
 
@@ -51,14 +55,14 @@ class FrontController extends Controller
 
     }
 
-    public function ShowCat()
+    public function showAllCategories()
     {
 
         return view('show-cat');
 
     }
 
-    public function SingleCat($id)
+    public function showCategory($id)
     {
 
         $articles = Article::
@@ -81,7 +85,7 @@ class FrontController extends Controller
         }
     }
 
-    public function DelCat($id)
+    public function deleteCategory($id)
     {
 
         category::where('id_cat', $id)->delete();
@@ -92,7 +96,7 @@ class FrontController extends Controller
 
     }
 
-    public function showTagArt($id)
+    public function showArticleWithTags($id)
     {
 
         $likeSearch1 = $id . ';%';

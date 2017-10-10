@@ -1,4 +1,4 @@
-@extends ('Layouts.site')
+@extends ('layouts.site')
 
 @section('content')
 

@@ -16,35 +16,32 @@ Route::group(['prefix' => 'admin'], function()
 
     Route::get('/', 'AdminController@showAdmin')->name('Admin');
 
-    Route::get('edit/', 'AdminController@editArt')->name('EditArticle');
+    Route::get('edit/', 'AdminController@editArticle')->name('EditArticle');
 
-    Route::get('new-article', 'AdminController@AddArt')->name('CreateArticle');
+    Route::get('new-article', 'AdminController@createArticle')->name('CreateArticle');
 
-    Route::post('edit/', 'AdminController@SaveArt')->name('SaveArticle');
+    Route::post('edit/', 'AdminController@saveArticle')->name('SaveArticle');
 
-    Route::get('delete/{id}', 'AdminController@DelArt')->name('DeleteArticle');
+    Route::get('delete/{id}', 'AdminController@deleteArticle')->name('DeleteArticle');
 
-    Route::get('new-category', 'AdminController@AddCat')->name('CreateCategory');
+    Route::get('new-category', 'AdminController@createCategory')->name('CreateCategory');
 
-    Route::post('addCat/', 'AdminController@saveCat')->name('SaveCategory');
+    Route::post('addCat/', 'AdminController@saveCategory')->name('SaveCategory');
 
 });
 
 
+Route::get('articles/', 'FrontController@showAllArticles')->name('ShowAllArticles');
 
+Route::get('article/{id}', 'FrontController@showArticle')->name('ShowArticle');
 
+Route::get('category', 'FrontController@showAllCategories')->name('ShowAllCategories');
 
-Route::get('articles/', 'FrontController@articles')->name('ShowAllArticles');
+Route::get('category/{id}', 'FrontController@showCategory')->name('ShowCategory');
 
-Route::get('articles/{id}', 'FrontController@article')->name('ShowArticle');
+Route::get('tags/{id}', 'FrontController@showArticleWithTags')->name('ShowArticleWithTags');
 
-Route::get('category', 'FrontController@ShowCat')->name('ShowAllCategories');
-
-Route::get('category/{id}', 'FrontController@SingleCat')->name('ShowCategory');
-
-Route::get('tags/{id}', 'FrontController@showTagArt')->name('ShowArticleWithTags');
-
-Route::get('category/delete/{id}', 'FrontController@DelCat');
+Route::get('category/delete/{id}', 'FrontController@deleteCategory');
 
 
 Auth::routes();
