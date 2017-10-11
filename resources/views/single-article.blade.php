@@ -3,7 +3,7 @@
 @section('content2')
 
         <h3 align = "right">Category: <a href = "{{ route('ShowArticlesFromCategory', $category->id_cat) }}">{{  $category->category_name }}</a></h3>
-        <em><h2 align = "center">{{  $article->title }}</h2></em>
+        <h2 align = "center"><em>{{  $article->title }}</em></h2>
         <h4 align = "center">{{ $article->description }}</h4>
         <p align = "center"><img src = {{ $article->image  }} /></p>
         <p align = "center">{{ $article->text }}</p>
