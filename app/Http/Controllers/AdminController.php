@@ -100,7 +100,7 @@ class AdminController extends Controller
 
             })->get();
 
-            if(count($issetTags) > 0) {  //isset tags in DB
+            if(count($issetTags) > 0) {  //isset tag in DB
 
                 foreach($issetTags as $value) {
 

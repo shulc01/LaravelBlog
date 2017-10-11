@@ -28,7 +28,6 @@ class FrontController extends Controller
         return view('page')->with('articles', $articles);
 
     }
-
     public function showArticle($id)
     {
 
@@ -91,8 +90,6 @@ class FrontController extends Controller
 
     public function deleteCategory($id)
     {
-
-
 
         Category::where('id_cat', $id)->delete();
 
