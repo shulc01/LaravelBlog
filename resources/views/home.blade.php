@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <input type="button" value="Go to site" onclick="window.location.href='{{ route('Articles') }}'"/>
+                    <input type="button" value="Go to site" onclick="window.location.href='{{ route('ShowAllArticles') }}'"/>
                 </div>
 
                 <div class="panel-body">

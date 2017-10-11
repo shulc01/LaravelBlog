@@ -2,6 +2,20 @@
 
 @section('content')
 
+    <script>
+
+        function confirmDelete(){
+
+            var x = confirm("Are you sure want to delete this article?");
+
+            if (x) return true;
+
+            else return false;
+
+        }
+
+    </script>
+
     @if (isset(Auth::user()->name) && Auth::user()->name == 'admin')
 
 
@@ -31,7 +45,7 @@
                             </li>
                         </ul>
                     </li>
-                    @endguest
+                @endguest
             </ul>
         </div>
 
@@ -50,36 +64,21 @@
             </div>
             <h2 class = "cat_title">ALL NEWS</h2>
 
-        <script>
+        @foreach($allArticles as $article)
 
-            function confirmDelete(id){
+            <form action = "{{ route('DeleteArticle', $article->id) }}" method = "POST" onsubmit = "return confirmDelete()">
 
-                var x = confirm ("Are you sure want to delete?");
+                <input type="submit" value="Delete"/>
 
-                if (x) return window.location.href='/admin/delete/' + id;
+                <a href = "{{ route('EditArticle', $article->id) }}" target = "_blank">{{ $article->title }}</a>
+                <a href = "{{ route('ShowArticlesFromCategory', $article->id_cat) }}" target = "_blank">({{ $article->category_name  }})</a><br /><br />
 
-                else false;
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
 
-            }
+            </form>
 
-        </script>
-
-            {{--<form action = "{{ route('EditArticle')  }}" method = "GET">--}}
-
-                @foreach($allarticles as $article)
-
-                    <input type="button" value="Delete" onclick = " return confirmDelete({{ $article->id}})"/>
-
-                    <input type = "checkbox" name = "article" value = "{{  $article->id  }}"/>
-
-                    <a href = "{{ route('EditArticle', $article->id) }}" target = "_blank">{{ $article->title }}</a>
-                    <a href = "{{ route('ShowCategory', $article->id_cat) }}" target = "_blank">({{ $article->category_name  }})</a><br /><br />
-
-                @endforeach
-
-                {{--<input type="submit" value = "Edit"/>--}}
-
-            {{--</form>--}}
+        @endforeach
 
     @else
 

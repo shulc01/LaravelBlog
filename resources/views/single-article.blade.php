@@ -2,20 +2,20 @@
 
 @section('content2')
 
-        <h3 align = "right">Category: <a href = "{{ route('ShowCategory', $article->category_id) }}">{{  $article->category_name }}</a></h3>
+        <h3 align = "right">Category: <a href = "{{ route('ShowArticlesFromCategory', $category->id_cat) }}">{{  $category->category_name }}</a></h3>
         <em><h2 align = "center">{{  $article->title }}</h2></em>
         <h4 align = "center">{{ $article->description }}</h4>
         <p align = "center"><img src = {{ $article->image  }} /></p>
         <p align = "center">{{ $article->text }}</p>
 
-        @if ($article->tags)
+        @isset ($tags)
 
-            @foreach($article->tags as $tags)
+            @foreach($tags as $tag)
 
-                <a href = "{{ route('ShowArticleWithTags', $tags->id_tag) }}">#{{ $tags->tag_name }}</a>
+                <a href = "{{ route('ShowArticleWithTags', $tag->id_tag) }}">#{{ $tag->tag_name }}</a>
 
             @endforeach
 
-        @endif
+        @endisset
 
 @endsection

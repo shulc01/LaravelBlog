@@ -81,10 +81,10 @@ ul.navbar-nav > li:hover > ul.submenu {
 .cat {
    background-color: wheat;
     width: 800px;
-    height: 840px;
+    height: auto;
     text-align: justify;
     font-size: 18px;
-    /*margin: 3px 3px 3px 3px;*/
+    padding: 30px 30px 30px 30px;
     color: darkblue;
     margin-left: 500px;
 }

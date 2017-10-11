@@ -42,7 +42,7 @@
 
                         @foreach ($categories as $category)
 
-                         <li><a href = "{{ route('ShowCategory', $category->id_cat) }}">{{ $category->category_name }}</a></li>
+                         <li><a href = "{{ route('ShowArticlesFromCategory', $category->id_cat) }}">{{ $category->category_name }}</a></li>
 
                         @endforeach
 

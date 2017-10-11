@@ -2,31 +2,25 @@
 
 @section('content2')
 
-    <script>
-
-        function confirmDeleteCat(id){
-
-            var x = confirm ("Are you sure want to delete this category?");
-
-            if (x) return window.location.href='category/delete/' + id;
-
-            else false;
-
-        }
-
-    </script>
-
     <div class = "cat">
 
         @foreach ($categories as $category)
 
-            <a href = {{ route('ShowCategory', $category->id_cat) }}><h2 align = "center">{{ $category->category_name  }}</h2></a>
+            <a href = {{ route('ShowArticlesFromCategory', $category->id_cat) }}><h2 align = "center">{{ $category->category_name  }}</h2></a>
 
-                @if (isset(Auth::user()->name) && Auth::user()->name == 'admin')
+            @if (isset(Auth::user()->name) && Auth::user()->name == 'admin')
 
-                    <input type="button" value="Delete category" onclick = " return confirmDeleteCat({{ $category->id_cat}})"/>
+                <form action = "{{ route('DeleteCategory', $category->id_cat) }}" method = "POST"
+                      onsubmit = "return confirm('Are you sure want to delete category {{ strtoupper($category->category_name) }}?') ? true : false;">
 
-                @endif
+                <input type="submit" value="Delete category"/>
+
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+
+                </form>
+
+            @endif
 
             {{ $category->category_desc }}
 

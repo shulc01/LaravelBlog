@@ -14,9 +14,11 @@ class AdminController extends Controller
     {
 
         $allArticles = Article::leftJoin('categories', 'articles.category_id', '=' , 'categories.id_cat')
-                                ->select('articles.id', 'articles.title', 'categories.category_name', 'categories.id_cat', 'articles.description')->get();
+                                ->select('articles.id', 'articles.title', 'categories.category_name', 'categories.id_cat', 'articles.description')
+                                ->orderBy('updated_at', 'desc')
+                                ->get();
 
-        return view('adminShow')->with('allarticles', $allArticles);
+        return view('adminShow')->with('allArticles', $allArticles);
 
     }
 
@@ -25,32 +27,41 @@ class AdminController extends Controller
 
         $editArticle = Article::find($id);
 
-        $all_categories = Category::all();
+        $allCategories = Category::all();
 
-        $tags = Tag::all();
+        $allTags = Tag::all();
 
         if (isset($editArticle->tags_id)) {
 
-            $tags_id = explode(';', $editArticle->tags_id);
+            $tagsIdArticle = explode(';', $editArticle->tags_id);
 
-            $editArticle->tags_id = $tags_id;
+            $tags_name = Tag::whereIn('id_tag', $tagsIdArticle)->get();
 
-            $tags_name = Tag::whereIn('id_tag', $tags_id)->get();
-
-            $editArticle->tags_name = '';
+            $tagsArticle = '';
 
             foreach ($tags_name as $value) {
 
-                $editArticle->tags_name .= $value->tag_name . '; ';
+                $tagsArticle .= $value->tag_name . '; ';
 
             }
 
-        }
+            $data = [                                    //???
+                'editArticle' => $editArticle,
+                'allСategories' => $allCategories,
+                'allTags' => $allTags,
+                'tagsArticle' => $tagsArticle,
+                'tagsIdArticle' => $tagsIdArticle
+            ];
 
-            return view('editArticle')->with(['editArticle' => $editArticle,
-                'allcat' => $all_categories,
-                'tags' => $tags
-            ]);
+        } else
+
+            $data = [
+                'editArticle' => $editArticle,
+                'allСategories' => $allCategories,
+                'allTags' => $allTags
+            ];
+
+            return view('editArticle')->with($data);
     }
 
     public function saveArticle(Request $request)
@@ -75,66 +86,58 @@ class AdminController extends Controller
 
             $data['custom_tags'] = explode(';', $data['custom_tags']);
 
-            $data['custom_tags'] = array_diff(array_map('trim', $data['custom_tags']), array('', 0, null));
+            $data['custom_tags'] = array_diff(array_map('trim', $data['custom_tags']), ['', 0, null]);
 
             $custom_tags = $data['custom_tags'];
 
-            $result1 = Tag::where(function($query) use ($custom_tags) {
+            $issetTags = Tag::where(function($query) use ($custom_tags) {
 
-                foreach($custom_tags as $tagss){
+                foreach($custom_tags as $custom_tag){
 
-                    $query->orWhere('tag_name', 'LIKE', $tagss);
+                    $query->orWhere('tag_name', 'LIKE', $custom_tag);
 
                 }
 
             })->get();
 
-            if(count($result1) > 0) {  //isset tag in DB
+            if(count($issetTags) > 0) {  //isset tags in DB
 
-                foreach($result1 as $value) {
+                foreach($issetTags as $value) {
 
                     $tags_custom_id .= $value->id_tag . ';';
 
                     foreach ($custom_tags as $key => $unset_tag) {
 
-                        if ($value->tag_name == $unset_tag) {
-
-                            unset($custom_tags[$key]);
-
-                        }
+                        if ($value->tag_name == $unset_tag) unset($custom_tags[$key]);
 
                     }
-
                 }
-
             }
 
             if ($custom_tags) {  // if isset new tags
 
-                $tags = array();
+                $newCustomTags = [];
 
-                    foreach ($custom_tags as $value) {
+                foreach ($custom_tags as $value) {
 
-                        $tags[] = array('tag_name' => $value);
-                    }
-
-                $tag = Tag::insert($tags);
-
-                $ids_new_tags = Tag::select('id_tag')->whereIn('tag_name', $tags)->get();
-
-                $id_new_tag = '';
-
-                foreach ($ids_new_tags as $id_new_tags) {
-
-                    $tags_custom_id .= $id_new_tags->id_tag . ';';
-
+                    $newCustomTags[] =['tag_name' => $value];
                 }
 
-            }
+                Tag::insert($newCustomTags);
 
+                $ids_new_tags = Tag::select('id_tag')->whereIn('tag_name', $newCustomTags)->get();
+
+                $tags_custom_id = '';
+
+                foreach ($ids_new_tags as $id_new_tag) {
+
+                    $tags_custom_id .= $id_new_tag->id_tag . ';';
+
+                }
+            }
         }
 
-        if ($data['id'] > 0) { //edit article
+        if ($data['id']) { //edit article
 
             if(isset($data['tags_id'])) $data['tags_id'] = implode(';' , $data['tags_id']) . ';';
 
@@ -150,13 +153,13 @@ class AdminController extends Controller
 
                     $tags_id = '';
 
-                        foreach ($data['tags_id'] as $tagsid) {
+                    foreach ($data['tags_id'] as $tagsid) {
 
-                            $tags_id .= $tagsid . ';';
+                        $tags_id .= $tagsid . ';';
 
-                        }
+                    }
 
-                    if ($tags_custom_id) $tags_id .= $tags_custom_id;
+                    if (isset($tags_custom_id)) $tags_id .= $tags_custom_id;
 
                     $data['tags_id'] = $tags_id;
 
@@ -175,12 +178,16 @@ class AdminController extends Controller
     public function createArticle()
     {
 
-        $all_categories = Category::all();
+        $allСategories = Category::all();
 
-        $tags = Tag::all();
+        $allTags = Tag::all();
 
-        return view('editArticle')
-            ->with(['allcat' => $all_categories, 'tags' => $tags]);
+        $data = [
+            'allСategories' => $allСategories,
+            'allTags' => $allTags
+        ];
+
+        return view('editArticle')->with($data);
     }
 
     public function deleteArticle($id)
@@ -204,7 +211,7 @@ class AdminController extends Controller
 
         $this->validate($request,
             ['category_name' => 'required|min:3',
-                'category_desc' => 'required|min:3'
+             'category_desc' => 'required|min:3'
             ]);
 
         $data = $request->all(); ////hot fix!

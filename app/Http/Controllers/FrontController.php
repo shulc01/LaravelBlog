@@ -1,6 +1,5 @@
 <?php
 
-//namespace App;
 namespace App\Http\Controllers;
 
 use App\Models\Article;
@@ -35,19 +34,32 @@ class FrontController extends Controller
 
         $article = Article::find($id);
 
-        $category_name = Category::where('id_cat', $article->category_id)->first();
+        $category = Category::where('id_cat', $article->category_id)->first();
 
-        $tagsid = explode(';' , $article->tags_id);
+        if (isset($article->tags_id)) {
 
-        $tagsidnotnull = array_diff($tagsid, array('', 0, null));
+            $tags_id = explode(';', $article->tags_id);
 
-        $tags = Tag::whereIn('id_tag' , $tagsidnotnull)->get();
+            $deleteNullTagsId = array_diff($tags_id, ['', 0, null]);
 
-        $article->category_name = $category_name->category_name;
+            $tags = Tag::whereIn('id_tag', $deleteNullTagsId)->get();
 
-        $article->tags = $tags;
+            $data = [
+                'article' => $article,
+                'tags' => $tags,
+                'category' => $category
+            ];
 
-        return view('single-article')->with('article', $article);
+        }
+
+        else
+
+            $data = [
+                'article' => $article,
+                'category' => $category
+            ];
+
+        return view('single-article')->with($data);
 
     }
 
@@ -58,31 +70,35 @@ class FrontController extends Controller
 
     }
 
-    public function showCategory($id)
+    public function showArticlesFromCategory($id)
     {
 
-        $articles = Article::
-                    leftJoin('categories', 'articles.category_id', '=' , 'categories.id_cat')
-                    ->select('articles.id', 'articles.title', 'articles.updated_at', 'categories.category_name', 'categories.id_cat', 'articles.description')
-                    ->where('articles.category_id', $id)
-                    ->orderBy('created_at', 'desc')
-                    ->get();
+        $articlesFromCategory = Article::
+                                leftJoin('categories', 'articles.category_id', '=' , 'categories.id_cat')
+                                ->select('articles.id', 'articles.title', 'articles.updated_at', 'categories.category_name', 'categories.id_cat', 'articles.description')
+                                ->where('articles.category_id', $id)
+                                ->orderBy('created_at', 'desc')
+                                ->get();
 
-        if (collect($articles)->isNotEmpty()) {
+        if (collect($articlesFromCategory)->isNotEmpty())
 
-            return view('page')->with('articles', $articles);
+            return view('page')->with('articles', $articlesFromCategory);
 
-        }
+        else
+
+            return view('page');
     }
 
     public function deleteCategory($id)
     {
 
-        category::where('id_cat', $id)->delete();
 
-        $articles = Article::where('category_id', $id)->delete();
 
-        return redirect('/articles');
+        Category::where('id_cat', $id)->delete();
+
+        Article::where('category_id', $id)->delete();
+
+        return redirect('/categories');
 
     }
 
@@ -93,14 +109,19 @@ class FrontController extends Controller
 
         $likeSearch2 = '%;' . $id . ';%';
 
-        $showTagArt = Article::
-                        where('tags_id', 'like', $likeSearch2)
-                        ->orWhere('tags_id', 'like', $likeSearch1)
-                        ->get();
+        $articlesWithTags = Article::
+                            where('tags_id', 'like', $likeSearch2)
+                            ->orWhere('tags_id', 'like', $likeSearch1)
+                            ->get();
 
         $tag_name = Tag::where('id_tag', $id)->first();
 
-        return view('page')->with(['articles' => $showTagArt, 'tag_name' => $tag_name ]);
+        $data = [
+            'articles' => $articlesWithTags,
+            'tag_name' => $tag_name
+        ];
+
+        return view('page')->with($data);
 
     }
 

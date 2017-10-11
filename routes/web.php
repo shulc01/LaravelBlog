@@ -16,32 +16,32 @@ Route::group(['prefix' => 'admin'], function()
 
     Route::get('/', 'AdminController@showAdmin')->name('Admin');
 
-    Route::get('edit/article/{id}', 'AdminController@editArticle')->name('EditArticle');
-
     Route::get('new-article', 'AdminController@createArticle')->name('CreateArticle');
 
-    Route::post('edit/', 'AdminController@saveArticle')->name('SaveArticle');
+    Route::get('edit/article/{id}', 'AdminController@editArticle')->name('EditArticle');
 
-    Route::get('delete/{id}', 'AdminController@deleteArticle')->name('DeleteArticle');
+    Route::post('edit', 'AdminController@saveArticle')->name('SaveArticle');
 
     Route::get('new-category', 'AdminController@createCategory')->name('CreateCategory');
 
-    Route::post('addCat/', 'AdminController@saveCategory')->name('SaveCategory');
+    Route::post('new-category', 'AdminController@saveCategory')->name('SaveCategory');
+
+    Route::delete('/{id}', 'AdminController@deleteArticle')->name('DeleteArticle');
 
 });
 
 
-Route::get('articles/', 'FrontController@showAllArticles')->name('ShowAllArticles');
+Route::get('articles', 'FrontController@showAllArticles')->name('ShowAllArticles');
 
 Route::get('article/{id}', 'FrontController@showArticle')->name('ShowArticle');
 
-Route::get('category', 'FrontController@showAllCategories')->name('ShowAllCategories');
+Route::get('categories', 'FrontController@showAllCategories')->name('ShowAllCategories');
 
-Route::get('category/{id}', 'FrontController@showCategory')->name('ShowCategory');
+Route::get('category/{id}', 'FrontController@showArticlesFromCategory')->name('ShowArticlesFromCategory');
 
 Route::get('tags/{id}', 'FrontController@showArticleWithTags')->name('ShowArticleWithTags');
 
-Route::get('category/delete/{id}', 'FrontController@deleteCategory');
+Route::delete('categories/{id}', 'FrontController@deleteCategory')->name('DeleteCategory');
 
 
 Auth::routes();
